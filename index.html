@@ -1,0 +1,63 @@
+<html>
+<head>
+<!-- Things -->
+</head>
+<body>
+<p>Current Real Date and Time:</p>
+<p id="realTime"></p>
+<br/>
+<p>Current A'therys Date and Time:</p>
+<p id="atherysTime"></p>
+<script>
+var realString = "";
+var atherysString = "";
+
+var currentTime = new Date();
+
+var msTotal = currentTime.getTime();
+var sTotal = msTotal/1000;
+
+var SinY = 10*10*10*24*60*60;
+var MSinY = SinY*1000
+
+realYear = currentTime.getFullYear();
+
+var msYear;
+if (((realYear % 4 == 0) && (realYear % 100 != 0)) || (realYear % 400 == 0)) {
+    msYear = 86400000 * 366;
+} else {
+    msYear = 86400000 * 365;
+};
+
+var msThroughYear = parseInt(currentTime.getTime()) % msYear;
+var amsThroughYear = (msThroughYear / msYear) * MSinY ;
+var asThroughYear = (amsThroughYear / 1000) >> 0;
+var amThroughYear = (asThroughYear / 60) >> 0;
+var ahThroughYear = (amThroughYear / 60) >> 0;
+var adThroughYear = (ahThroughYear / 24) >> 0;
+var awThroughYear = (adThroughYear / 10) >> 0;
+
+var month = awThroughYear / 10 >> 0;
+var week = awThroughYear % 10;
+var monthDay = adThroughYear % 100;
+var weekDay = adThroughYear % 10;
+var hour = ahThroughYear % 24;
+var minute = amThroughYear % 60;
+var second = asThroughYear % 60;
+
+var months = ["Ascension","Wind's Revival","Forgefire","Sun's Might","Sand's Song","Urth's Heart","Tide's Flux","Stormshift","Frostshroud","Reckoning"];
+var days = ["Ulvei","Antwei","Toldei","Mirnei","Kultei","Yavhei","Fenyei","Rosnei","Ulmhei","Paartesh"];
+
+var atherysYear = currentTime.getFullYear() - 1749;
+
+var atherysMonth = months[month]
+var atherysDay = days[weekDay]
+
+realString += currentTime.toUTCString();
+atherysString += atherysDay + ", " + (monthDay+1) + " " + atherysMonth + " " + atherysYear + " " + ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + second).slice(-2);
+
+document.getElementById("realTime").innerHTML = realString;
+document.getElementById("atherysTime").innerHTML = atherysString;
+</script>
+</body>
+</html>
