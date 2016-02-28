@@ -88,7 +88,7 @@ var mainProgram = setInterval(function(){
         msYear = 86400000 * 365;
     };
     var startYear = new Date(String(realYear)+"-01-01");
-    var msThroughYear = parseInt(selectedDate.getTime()) - parseInt(startYear.getTime());
+    var msThroughYear = parseInt(currentTime.getTime()) - parseInt(startYear.getTime());
     var amsThroughYear = (msThroughYear / msYear) * MSinY ;
     var asThroughYear = (amsThroughYear / 1000) >> 0;
     var amThroughYear = (asThroughYear / 60) >> 0;
