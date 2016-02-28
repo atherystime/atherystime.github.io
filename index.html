@@ -11,7 +11,7 @@
 <br/>
 <p>Created by Gauth Ironstaff</p>
 <script>
-var mainloop = setTimeout(fuction(){
+var mainLoop = setTimeout(fuction(){
 var realString = "";
 var atherysString = "";
 
@@ -21,7 +21,7 @@ var msTotal = currentTime.getTime();
 var sTotal = msTotal/1000;
 
 var SinY = 10*10*10*24*60*60;
-var MSinY = SinY*1000
+var MSinY = SinY*1000;
 
 realYear = currentTime.getFullYear();
 
@@ -53,8 +53,8 @@ var days = ["Ulvei","Antwei","Toldei","Mirnei","Kultei","Yavhei","Fenyei","Rosne
 
 var atherysYear = currentTime.getFullYear() - 1749;
 
-var atherysMonth = months[month]
-var atherysDay = days[weekDay]
+var atherysMonth = months[month];
+var atherysDay = days[weekDay];
 
 realString += currentTime.toUTCString();
 atherysString += atherysDay + ", " + (monthDay+1) + " " + atherysMonth + " " + atherysYear + " " + ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + second).slice(-2);
