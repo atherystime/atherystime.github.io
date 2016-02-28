@@ -60,7 +60,7 @@ function calcAtherys(){
     
     var aYear = selectedDate.getFullYear() - 1749;
 
-    var aMonth = amonths[amonth-1];
+    var aMonth = amonths[amonth+1];
     var aDay = adays[aweekDay];
     
     output += aDay + ", " + (amonthDay+1) + " " + aMonth + " " + aYear + " " + ("0" + ahour).slice(-2) + ":" + ("0" + aminute).slice(-2) + ":" + ("0" + asecond).slice(-2);
@@ -108,7 +108,7 @@ var mainProgram = setInterval(function(){
 
     var atherysYear = currentTime.getFullYear() - 1749;
 
-    var atherysMonth = months[month];
+    var atherysMonth = months[month+1];
     var atherysDay = days[weekDay];
 
     realString += currentTime.toUTCString();
