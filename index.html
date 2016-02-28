@@ -39,7 +39,8 @@ function calcAtherys(){
     } else {
         msiny = 86400000 * 365;
     };
-    var msty = parseInt(selectedDate.getTime()) - parseInt(Date(String(selYear) + "-01-01").getTime());
+    var startOfYear = new Date(selYear,0,0,0,0,0,0)
+    var msty = parseInt(selectedDate.getTime()) - parseInt(startOfYear.getTime());
     var amstY = (msty / msiny) * msinY ;
     var astY = (amstY / 1000) >> 0;
     var amtY = (astY / 60) >> 0;
