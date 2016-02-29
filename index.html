@@ -5,6 +5,7 @@
 <body style="font-family:Verdana,Geneva,sans-serif">
     <h3><p>A'therys Time Tool</p></h3>
     <p><strong>Note:</strong> this tool is currently for the 'old' 1000-day, 10-season year. When details of the revised system are published I'll update this.</p>
+<br/>
     <p>Current Real Date and Time:</p>
 <strong style="font-family:'Lucida Console',Monaco,monospace"><h3>
     <p id="realTime"></p>
@@ -24,98 +25,71 @@
 <br/>
 <p>Created by Gauth Ironstaff</p>
 <script>
-function calcAtherys(){
-    var inputtedTime = document.getElementById("inputTime").value;
-    var inputtedDate = document.getElementById("inputDate").value;
-    
-    var selectedDate = new Date(inputtedDate + " " + inputtedTime);
-    
-    var output = "";
-    
-    var msinY = 10*10*10*24*60*60*1000;
-    
-    var selYear = selectedDate.getFullYear();
-    var msiny;
-    if (((selYear % 4 == 0) && (selYear % 100 != 0)) || (selYear % 400 == 0)) {
-        msiny = 86400000 * 366;
-    } else {
-        msiny = 86400000 * 365;
-    };
-    var startOfYear = new Date(String(selYear)+"-01-01")
-    var msty = parseInt(selectedDate.getTime()) - parseInt(startOfYear.getTime());
-    var amstY = (msty / msiny) * msinY ;
-    var astY = (amstY / 1000) >> 0;
-    var amtY = (astY / 60) >> 0;
-    var ahtY = (amtY / 60) >> 0;
-    var adtY = (ahtY / 24) >> 0;
-    var awtY = (adtY / 10) >> 0;
-    
-    var amonth = (awtY / 10) >> 0;
-    var aweek = awtY % 10;
-    var amonthDay = adtY % 100;
-    var aweekDay = adtY % 10;
-    var ahour = ahtY % 24;
-    var aminute = amtY % 60;
-    var asecond = astY % 60;
-    
-    var amonths = ["Ascension","Wind's Revival","Forgefire","Sun's Might","Sand's Song","Urth's Heart","Tide's Flux","Stormshift","Frostshroud","Reckoning"];
-    var adays = ["Ulvei","Antwei","Toldei","Mirnei","Kultei","Yavhei","Fenyei","Rosnei","Ulmhei","Paartesh"];
-    
-    var aYear = selectedDate.getFullYear() - 1749;
+function realToAtherys(dateObject){
 
-    var aMonth = amonths[amonth];
-    var aDay = adays[aweekDay];
+    var msTotal = dateObject.getTime();
+
+    var msInAtherysYear = 10*10*10*24*60*60*1000;
+
+    var realYear = dateObject.getFullYear();
+
+    var msInCurrentYear;
+    if (((realYear % 4 == 0) && (realYear % 100 != 0)) || (realYear % 400 == 0)) {
+        msInCurrentYear = 86400000 * 366;
+    } else {
+        msInCurrentYear = 86400000 * 365;
+    };
+    var startYear = new Date(String(realYear)+"-01-01");
+    var msThroughYear = parseInt(dateObject.getTime()) - parseInt(startYear.getTime());
     
-    output += aDay + ", " + (amonthDay+1) + " " + aMonth + " " + aYear + " " + ("0" + ahour).slice(-2) + ":" + ("0" + aminute).slice(-2) + ":" + ("0" + asecond).slice(-2);
+    var msThroughAtherysYear = (msThroughYear / msInCurrentYear) * msInAtherysYear ;
+    var sThroughAtherysYear = (msThroughAtherysYear / 1000) >> 0;
+    var mThroughAtherysYear = (sThroughAtherysYear / 60) >> 0;
+    var hThroughAtherysYear = (mThroughAtherysYear / 60) >> 0;
+    var dThroughAtherysYear = (hThroughAtherysYear / 24) >> 0;
+    var wThroughAtherysYear = (dThroughAtherysYear / 10) >> 0;
+
+    var month = wThroughAtherysYear / 10 >> 0;
+    var week = wThroughAtherysYear % 10;
+    var monthDay = dThroughAtherysYear % 100;
+    var weekDay = dThroughAtherysYear % 10;
+    var hour = hThroughAtherysYear % 24;
+    var minute = mThroughAtherysYear % 60;
+    var second = sThroughAtherysYear % 60;
+
+    var months = ["Ascension","Wind's Revival","Forgefire","Sun's Might","Sand's Song","Urth's Heart","Tide's Flux","Stormshift","Frostshroud","Reckoning"];
+    var days = ["Ulvei","Antwei","Toldei","Mirnei","Kultei","Yavhei","Fenyei","Rosnei","Ulmhei","Paartesh"];
+
+    var atherysYear = dateObject.getFullYear() - 1749;
+
+    var atherysMonth = months[month];
+    var atherysDay = days[weekDay];
+
+    var result = atherysDay + ", " + (monthDay+1) + " " + atherysMonth + " " + atherysYear + " " + ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + second).slice(-2);
+
+    return result
+};
+
+function calcAtherys(){
+    var inputTime = document.getElementById("inputTime").value;
+    var inputDate = document.getElementById("inputDate").value;
+    
+    var selectedDate = new Date(inputDate + " " + inputTime);
+    
+    var output = realToAtherys(selectedDate);
+    
     document.getElementById("userTime").innerHTML = output;
 };
+
 var mainProgram = setInterval(function(){
     var realString = "";
     var atherysString = "";
 
     var currentTime = new Date();
 
-    var msTotal = currentTime.getTime();
-    var sTotal = msTotal/1000;
+    var atherysString = realToAtherys(currentTime);
 
-    var SinY = 10*10*10*24*60*60;
-    var MSinY = SinY*1000;
-
-    var realYear = currentTime.getFullYear();
-
-    var msYear;
-    if (((realYear % 4 == 0) && (realYear % 100 != 0)) || (realYear % 400 == 0)) {
-        msYear = 86400000 * 366;
-    } else {
-        msYear = 86400000 * 365;
-    };
-    var startYear = new Date(String(realYear)+"-01-01");
-    var msThroughYear = parseInt(currentTime.getTime()) - parseInt(startYear.getTime());
-    var amsThroughYear = (msThroughYear / msYear) * MSinY ;
-    var asThroughYear = (amsThroughYear / 1000) >> 0;
-    var amThroughYear = (asThroughYear / 60) >> 0;
-    var ahThroughYear = (amThroughYear / 60) >> 0;
-    var adThroughYear = (ahThroughYear / 24) >> 0;
-    var awThroughYear = (adThroughYear / 10) >> 0;
-
-    var month = awThroughYear / 10 >> 0;
-    var week = awThroughYear % 10;
-    var monthDay = adThroughYear % 100;
-    var weekDay = adThroughYear % 10;
-    var hour = ahThroughYear % 24;
-    var minute = amThroughYear % 60;
-    var second = asThroughYear % 60;
-
-    var months = ["Ascension","Wind's Revival","Forgefire","Sun's Might","Sand's Song","Urth's Heart","Tide's Flux","Stormshift","Frostshroud","Reckoning"];
-    var days = ["Ulvei","Antwei","Toldei","Mirnei","Kultei","Yavhei","Fenyei","Rosnei","Ulmhei","Paartesh"];
-
-    var atherysYear = currentTime.getFullYear() - 1749;
-
-    var atherysMonth = months[month];
-    var atherysDay = days[weekDay];
-
-    realString += currentTime.toUTCString();
-    atherysString += atherysDay + ", " + (monthDay+1) + " " + atherysMonth + " " + atherysYear + " " + ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + second).slice(-2);
+    var realString = currentTime.toUTCString();
 
     document.getElementById("realTime").innerHTML = realString;
     document.getElementById("atherysTime").innerHTML = atherysString;
